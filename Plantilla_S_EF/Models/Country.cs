@@ -1,38 +1,41 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Plantilla_S_EF.Models
 {
-    [Table("City")]
-    public class City
+    [Table("Country")]
+    public class Country
     {
         [Key]
         public int id { get; set; }
-        
-        [Column(TypeName ="varchar(120)")]
+
+        [Column(TypeName = "varchar(120)")]
         public string name { get; set; }
 
-        [Column(TypeName ="bigint")]
+        [Column(TypeName = "bigint")]
         public long population { get; set; }
 
-        [Column(TypeName ="datetime")]
+        [Column(TypeName = "datetime")]
         public DateTime updatedDate { get; set; }
 
-        [Column(TypeName ="varchar(200)")]
+        [Column(TypeName = "varchar(200)")]
         public Guid Token { get; set; }
 
-        [Column(TypeName ="bit")]
+        [Column(TypeName = "bit")]
         public bool disabled { get; set; }
 
-        [Column(TypeName ="int")]
+        [Column(TypeName = "int")]
         public int pib { get; set; }
-        public int id_country { get; set; }
 
-        [ForeignKey("id_country")]
-        [InverseProperty("cities")]
-        public virtual Country country { get; set; }
+        [InverseProperty("country")]
+        public virtual ICollection<City> cities { get; set; }
+
+
+
 
     }
 }
