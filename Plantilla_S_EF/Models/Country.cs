@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System.Text.Json.Serialization;
 
 namespace Plantilla_S_EF.Models
 {
@@ -11,6 +11,7 @@ namespace Plantilla_S_EF.Models
     public class Country
     {
         [Key]
+        [JsonIgnore]
         public int id { get; set; }
 
         [Column(TypeName = "varchar(120)")]
@@ -23,6 +24,7 @@ namespace Plantilla_S_EF.Models
         public DateTime updatedDate { get; set; }
 
         [Column(TypeName = "varchar(200)")]
+        [JsonIgnore]
         public Guid Token { get; set; }
 
         [Column(TypeName = "bit")]
@@ -32,6 +34,7 @@ namespace Plantilla_S_EF.Models
         public int pib { get; set; }
 
         [InverseProperty("country")]
+        [JsonIgnore]
         public virtual ICollection<City> cities { get; set; }
 
 

@@ -12,6 +12,7 @@ using Plantilla_S_EF.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Plantilla_S_EF

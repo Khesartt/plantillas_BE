@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System.Text.Json.Serialization;
 
 namespace Plantilla_S_EF.Models
 {
@@ -9,6 +9,7 @@ namespace Plantilla_S_EF.Models
     public class City
     {
         [Key]
+        [JsonIgnore]
         public int id { get; set; }
         
         [Column(TypeName ="varchar(120)")]
@@ -21,6 +22,7 @@ namespace Plantilla_S_EF.Models
         public DateTime updatedDate { get; set; }
 
         [Column(TypeName ="varchar(200)")]
+        [JsonIgnore]
         public Guid Token { get; set; }
 
         [Column(TypeName ="bit")]
@@ -32,6 +34,7 @@ namespace Plantilla_S_EF.Models
 
         [ForeignKey("id_country")]
         [InverseProperty("cities")]
+        [JsonIgnore]
         public virtual Country country { get; set; }
 
     }
