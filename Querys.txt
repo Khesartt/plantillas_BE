@@ -1,0 +1,132 @@
+create database plantillas_BE;
+
+use plantillas_BE;
+
+--crear tablas
+create table Country(
+id int identity(1,1) primary key,
+name varchar(120) null,
+population bigint not null,
+updatedDate datetime not null,
+Token varchar(200) not null,
+disabled bit not null,
+pib int not null
+);
+create table City(
+id int identity(1,1) primary key,
+name varchar(120) null,
+population bigint not null,
+updatedDate datetime not null,
+Token varchar(200) not null,
+disabled bit not null,
+pib int not null,
+id_country int not null
+);
+alter table City add foreign key (id_country) references Country(id);
+
+--listar datos
+go
+create procedure listCities
+as
+begin
+	select * from city
+end
+go
+create procedure listCountries
+as
+begin
+	select * from Country
+end
+go
+--obtener dato especifico por id
+create procedure getById_Country(
+@id int
+)
+as
+begin
+	select * from Country where id=@id
+end
+go
+create procedure getById_City(
+@id int
+)
+as
+begin
+	select * from City where id=@id
+end
+go
+--insertar datos
+create procedure saveCountry(
+@name varchar(120),
+@population bigint,
+@updatedDate datetime,
+@Token varchar(200),
+@disabled bit,
+@pib int
+)
+as
+begin
+	insert into Country(name,population,updatedDate,Token,disabled,pib) values (@name,@population,@updatedDate,@Token,@disabled,@pib)
+end
+go
+create procedure saveCity(
+@name varchar(120),
+@population bigint,
+@updatedDate datetime,
+@Token varchar(200),
+@disabled bit,
+@pib int,
+@id_country int
+)
+as
+begin
+	insert into Country(name,population,updatedDate,Token,disabled,pib,id_country) values (@name,@population,@updatedDate,@Token,@disabled,@pib,@id_country)
+end
+go
+--editar datos
+create procedure editCity(
+@id int,
+@name varchar(120),
+@population bigint,
+@updatedDate datetime,
+@Token varchar(200),
+@disabled bit,
+@pib int,
+@id_country int
+)
+as
+begin
+	update Country set name=@name,population=@population,updatedDate=@updatedDate,Token=@Token,disabled=@disabled,pib=@pib,id_country=@id_country where id=@id
+end
+go
+create procedure editCountry(
+@id int,
+@name varchar(120),
+@population bigint,
+@updatedDate datetime,
+@Token varchar(200),
+@disabled bit,
+@pib int
+)
+as
+begin
+	update Country set name=@name,population=@population,updatedDate=@updatedDate,Token=@Token,disabled=@disabled,pib=@pib where id=@id
+end
+go
+-- eliminar registro
+create procedure deleteCountry(
+@id int
+)
+as
+begin
+ delete from Country where id=@id
+end
+go
+create procedure deleteCity(
+@id int
+)
+as
+begin
+ delete from City where id=@id
+end
+go

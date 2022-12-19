@@ -13,5 +13,6 @@ se trabaja bajo el marco de .NET 5.0 porque la mayoria de las empresas no cuenta
 -- Microsoft.EntityFrameworkCore.SqlServer version 5.0.17
 -- Microsoft.EntityFrameworkCore.Tools version 5.0.17
 -- Swashbuckle.AspNetCore version 5.6.3
+-- System.Data.SqlClient version 4.8.5
 
 este ultimo paquete es instalado por defecto siempre y cuando actives la opcion cuando se cree un proyecto nuevo desde visual studio
