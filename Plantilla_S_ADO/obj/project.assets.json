@@ -215,11 +215,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cesar\\Desktop\\Proyectos personales\\plantillas_BE_ADO\\Plantilla_S_ADO\\Plantilla_S_ADO.csproj",
+      "projectUniqueName": "C:\\Users\\cesar\\Desktop\\Proyectos personales\\plantillas_BE\\Plantilla_S_ADO\\Plantilla_S_ADO.csproj",
       "projectName": "Plantilla_S_ADO",
-      "projectPath": "C:\\Users\\cesar\\Desktop\\Proyectos personales\\plantillas_BE_ADO\\Plantilla_S_ADO\\Plantilla_S_ADO.csproj",
+      "projectPath": "C:\\Users\\cesar\\Desktop\\Proyectos personales\\plantillas_BE\\Plantilla_S_ADO\\Plantilla_S_ADO.csproj",
       "packagesPath": "C:\\Users\\cesar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cesar\\Desktop\\Proyectos personales\\plantillas_BE_ADO\\Plantilla_S_ADO\\obj\\",
+      "outputPath": "C:\\Users\\cesar\\Desktop\\Proyectos personales\\plantillas_BE\\Plantilla_S_ADO\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
