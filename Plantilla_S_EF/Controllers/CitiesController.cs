@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Plantilla_S_EF.Context;
 using Plantilla_S_EF.Models;
+using Plantilla_S_EF.Services;
 
 namespace Plantilla_S_EF.Controllers
 {
@@ -14,96 +9,56 @@ namespace Plantilla_S_EF.Controllers
     [ApiController]
     public class CitiesController : ControllerBase
     {
-        private readonly PrincipalContext _context;
+        private readonly CityServices cityServices;
 
         public CitiesController(PrincipalContext context)
         {
-            _context = context;
+            cityServices = new CityServices(context);
         }
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<City>>> Getcities()
+        public Respond<City> Getcities()
         {
-            return await _context.cities.ToListAsync();
+            return cityServices.getCities();
         }
 
         // GET: api/Cities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<City>> GetCity(int id)
+        public Respond<City> GetCity(int id)
         {
-            var city = await _context.cities.FindAsync(id);
-
-            if (city == null)
-            {
-                return NotFound();
-            }
-
-            return city;
+            return cityServices.GetCity(id);
         }
 
-        // PUT: api/Cities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCity(int id, City city)
+        // PUT: api/Cities/editar
+        [HttpPut("editar")]
+        public Respond<City> PutCity(City city)
         {
-            if (id != city.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(city).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return cityServices.editCity(city);
         }
 
-        // POST: api/Cities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<City>> PostCity(City city)
+        public Respond<City> PostCity(City city)
         {
-            city.Token = Guid.NewGuid();
-            _context.cities.Add(city);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCity", new { id = city.id }, city);
+            return cityServices.addCity(city);
         }
 
         // DELETE: api/Cities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCity(int id)
+        public Respond<City> DeleteCity(int id)
         {
-            var city = await _context.cities.FindAsync(id);
-            if (city == null)
-            {
-                return NotFound();
-            }
-
-            _context.cities.Remove(city);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return cityServices.deleteCity(id);
         }
 
-        private bool CityExists(int id)
+        [HttpGet("getByCountry/{id}")]
+        public Respond<City> getByCountry(int id)
         {
-            return _context.cities.Any(e => e.id == id);
+            return cityServices.getCitiesByCountry(id);
+        }
+        [HttpGet("getByCountry2/{id}")]
+        public Respond<City> getByCountry2(int id)
+        {
+            return cityServices.getCitiesByCountry2(id);
         }
     }
 }

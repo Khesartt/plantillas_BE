@@ -11,7 +11,6 @@ namespace Plantilla_S_EF.Models
     public class Country
     {
         [Key]
-        [JsonIgnore]
         public int id { get; set; }
 
         [Column(TypeName = "varchar(120)")]

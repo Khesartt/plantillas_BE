@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Plantilla_S_EF.Context;
 using Plantilla_S_EF.Models;
+using Plantilla_S_EF.Models.respondsModels;
+using Plantilla_S_EF.Services;
 
 namespace Plantilla_S_EF.Controllers
 {
@@ -14,96 +10,50 @@ namespace Plantilla_S_EF.Controllers
     [ApiController]
     public class CountriesController : ControllerBase
     {
-        private readonly PrincipalContext _context;
+        private readonly CountryServices countryServices;
 
         public CountriesController(PrincipalContext context)
         {
-            _context = context;
+            countryServices = new CountryServices(context);
         }
-
-        // GET: api/Countries
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Country>>> Getcountries()
+        [HttpGet("getAll")]
+        public Respond<CountryRespond> GetAll()
         {
-            return await _context.countries.ToListAsync();
+            return countryServices.GetAll();
+        }
+        // GET: api/Countries
+        [HttpGet("getCountries")]
+        public Respond<Country> Getcountries()
+        {
+            return countryServices.getCountries();
         }
 
         // GET: api/Countries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Country>> GetCountry(int id)
+        public Respond<Country> GetCountry(int id)
         {
-            var country = await _context.countries.FindAsync(id);
-
-            if (country == null)
-            {
-                return NotFound();
-            }
-
-            return country;
+            return countryServices.GetCountry(id);
         }
 
-        // PUT: api/Countries/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCountry(int id, Country country)
+        // PUT: api/Countries/editar
+        [HttpPut("editar")]
+        public Respond<Country> PutCountry(Country country)
         {
-            if (id != country.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(country).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CountryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return countryServices.editCountry(country);
         }
 
-        // POST: api/Countries
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Country>> PostCountry(Country country)
+        public Respond<Country> PostCountry(Country country)
         {
-            country.Token = Guid.NewGuid();
-            _context.countries.Add(country);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCountry", new { id = country.id }, country);
+            return countryServices.addCountry(country);
         }
 
         // DELETE: api/Countries/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCountry(int id)
+        public Respond<Country> DeleteCountry(int id)
         {
-            var country = await _context.countries.FindAsync(id);
-            if (country == null)
-            {
-                return NotFound();
-            }
-
-            _context.countries.Remove(country);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return countryServices.deleteCountry(id);
         }
-
-        private bool CountryExists(int id)
-        {
-            return _context.countries.Any(e => e.id == id);
-        }
+       
     }
 }

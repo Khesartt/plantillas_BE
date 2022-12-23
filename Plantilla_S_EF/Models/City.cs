@@ -9,7 +9,6 @@ namespace Plantilla_S_EF.Models
     public class City
     {
         [Key]
-        [JsonIgnore]
         public int id { get; set; }
         
         [Column(TypeName ="varchar(120)")]

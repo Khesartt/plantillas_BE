@@ -2,6 +2,7 @@
 using Plantilla_S_EF.Context;
 using Plantilla_S_EF.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Plantilla_S_EF.Services
@@ -73,7 +74,7 @@ namespace Plantilla_S_EF.Services
             try
             {
                 City cityData = db.cities.Where(x => x.id == city.id).FirstOrDefault();
-                if (city != null)
+                if (cityData != null)
                 {
                     cityData.name = city.name;
                     cityData.population = city.population;
@@ -119,6 +120,44 @@ namespace Plantilla_S_EF.Services
                     respond.error = true;
                     return respond;
                 }
+            }
+            catch (Exception ex)
+            {
+
+                respond.message = ex.ToString();
+                respond.error = true;
+                return respond;
+            }
+
+        }
+
+        public Respond<City> getCitiesByCountry(int id)
+        {
+            try
+            {
+                List<City> city = db.cities.Where(x => x.id_country == id).ToList();
+                respond.resultsL = city;
+                return respond;
+
+            }
+            catch (Exception ex)
+            {
+
+                respond.message = ex.ToString();
+                respond.error = true;
+                return respond;
+            }
+
+        }
+        public Respond<City> getCitiesByCountry2(int id)
+        {
+            try
+            {
+                respond.resultsQ = (from city in db.cities
+                                   where city.id_country == id  
+                                   select city).AsQueryable();
+                return respond;
+
             }
             catch (Exception ex)
             {

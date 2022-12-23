@@ -35,6 +35,7 @@ namespace Plantilla_S_EF
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Plantilla_S_EF", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
         }
 
@@ -46,9 +47,10 @@ namespace Plantilla_S_EF
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Plantilla_S_EF v1"));
+                app.UseDeveloperExceptionPage();
             }
             app.UseHttpsRedirection();
-
+            app.UseDeveloperExceptionPage();
             app.UseRouting();
 
             app.UseAuthorization();
