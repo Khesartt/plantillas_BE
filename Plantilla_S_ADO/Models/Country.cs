@@ -7,7 +7,6 @@ namespace Plantilla_S_ADO.Models
 {
     public class Country
     {
-        [JsonIgnore]
         public int id { get; set; }
         public string name { get; set; }
         public long population { get; set; }
